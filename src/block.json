@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "cjsb/accordion",
+	"version": "1.0.0",
+	"title": "Accordion",
+	"category": "text",
+	"icon": "arrow-down-alt2",
+	"description": "An accordion item block",
+	"attributes": {
+		"title": {
+			"type": "string",
+			"source": "text",
+			"selector": "button"
+		},
+		"ariaExpanded": {
+			"type": "boolean",
+			"default": "false"
+		},
+		"accordionId": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"anchor": true
+	},
+	"textdomain": "cjsb-accordion",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
