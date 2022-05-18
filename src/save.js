@@ -1,7 +1,10 @@
+import classnames from "classnames";
+import Icon from "./icon";
+
 /**
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
-import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
+import { InnerBlocks, useBlockProps, RichText } from "@wordpress/block-editor";
 
 /**
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
@@ -11,24 +14,35 @@ import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
  * @return {WPElement} Element to render.
  */
 export default function save({ attributes }) {
+	const { title, textAlignTitle, accordionId } = attributes;
+
+	const className =
+		textAlignTitle !== "none"
+			? classnames({
+					[` has-text-align-${textAlignTitle}`]: textAlignTitle,
+			  })
+			: "";
+
 	const createClass = (name) => {
 		const blockNameBase = "wp-block-cjsb-accordion__";
-
 		return blockNameBase + name;
 	};
 
 	return (
-		<div
-			id={createClass("item--" + attributes.accordionId)}
-			{...useBlockProps.save()}
-		>
+		<div id={createClass("item--" + accordionId)} {...useBlockProps.save()}>
 			<button
-				id={createClass("button--" + attributes.accordionId)}
+				id={createClass("button--" + accordionId)}
 				aria-expanded="false"
-				class={createClass("button")}
+				class={createClass("button") + className}
 			>
-				<span class={createClass("title")}>{attributes.title}</span>
-				<span class={createClass("icon")} aria-hidden="true"></span>
+				<RichText.Content
+					tagName="span"
+					class={createClass("title")}
+					value={title}
+				/>
+				<span class={createClass("icon")} aria-hidden="true">
+					<Icon />
+				</span>
 			</button>
 			<div class={createClass("content")}>
 				<InnerBlocks.Content />

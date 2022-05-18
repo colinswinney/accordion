@@ -1,42 +1,53 @@
 .wp-block-cjsb-accordion {
-	--cjsb-acc-title-padding: 0;
+	--cjsb-acc-button-padding: 1em 0;
+	--cjsb-acc-button-bg: transparent;
+	--cjsb-acc-button-bg-active: #f9f9f9;
+	--cjsb-acc-button-color: inherit;
+	--cjsb-acc-button-color-active: red;
+	--cjsb-acc-button-border-color: #eee;
+	--cjsb-acc-button-border-color-active: transparent;
 	--cjsb-acc-title-font-family: inherit;
-	--cjsb-acc-title-font-size: 1em;
+	--cjsb-acc-title-font-size: 2em;
 	--cjsb-acc-title-font-weight: 400;
+	--cjsb-acc-icon-size: 1em;
 	--cjsb-acc-content-padding: 0;
 	--cjsb-acc-transition: 0.2s ease;
-
-	border-bottom: 0.063rem solid black;
 
 	&__button {
 		position: relative;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		text-align: left;
 		width: 100%;
-		padding: 1em 0;
-		color: blue;
-		border: 0.063rem solid;
-		border-color: transparent;
-		background: transparent;
+		padding: var(--cjsb-acc-button-padding);
+		color: var(--cjsb-acc-button-color);
+		background: var(--cjsb-acc-button-bg);
+		border: none;
+		border-bottom: 0.063rem solid;
+		border-color: var(--cjsb-acc-button-border-color);
 		transition: var(--cjsb-acc-transition);
 		outline: none;
+
+		&:not(.has-text-align-center),
+		&:not(.has-text-align-right) {
+			text-align: left;
+		}
 
 		&:hover,
 		&:focus-visible {
 			cursor: pointer;
-			color: red;
+			color: var(--cjsb-acc-button-color-active);
+			background: var(--cjsb-acc-button-bg-active);
 		}
 
 		&:focus-visible {
-			outline-color: red;
+			outline-color: var(--cjsb-acc-button-color-active);
 			outline-offset: 0.25em;
 		}
 
 		&[aria-expanded="true"] {
-			border-bottom: 0.063rem solid transparent;
-			color: red;
+			border-color: var(--cjsb-acc-button-border-color-active);
+			color: var(--cjsb-acc-button-color-active);
 
 			+ .wp-block-cjsb-accordion__content {
 				padding: var(--cjsb-acc-content-padding);
@@ -45,12 +56,16 @@
 				transition: var(--cjsb-acc-transition);
 				will-change: opacity, max-height;
 			}
+
+			.wp-block-cjsb-accordion__icon {
+				transform: rotate(-180deg);
+			}
 		}
 	}
 
 	&__title {
 		display: block;
-		padding: var(--cjsb-acc-title-padding);
+		width: 100%;
 		font-family: var(--cjsb-acc-title-font-family);
 		font-size: var(--cjsb-acc-title-font-size);
 		font-weight: var(--cjsb-acc-title-font-weight);
@@ -58,6 +73,12 @@
 
 	&__icon {
 		transition: var(--cjsb-acc-transition);
+
+		svg {
+			height: var(--cjsb-acc-icon-size);
+			width: var(--cjsb-acc-icon-size);
+			vertical-align: middle;
+		}
 	}
 
 	&__content {

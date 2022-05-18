@@ -1,3 +1,6 @@
+import classnames from "classnames";
+import Icon from "./icon";
+
 /**
  * @see https://developer.wordpress.org/block-editor/packages/packages-components/
  */
@@ -7,8 +10,11 @@ import { PanelBody, TextControl } from "@wordpress/components";
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
 import {
-	InspectorControls,
+	AlignmentControl,
+	BlockControls,
 	InnerBlocks,
+	InspectorControls,
+	RichText,
 	useBlockProps,
 } from "@wordpress/block-editor";
 
@@ -24,9 +30,18 @@ import { __ } from "@wordpress/i18n";
  * @return {WPElement} Element to render.
  */
 export default function Edit({ clientId, attributes, setAttributes }) {
+	const { title, textAlignTitle, accordionId, placeholder } = attributes;
+
 	const blockProps = useBlockProps();
 
 	setAttributes({ accordionId: clientId });
+
+	const className =
+		textAlignTitle !== "none"
+			? classnames({
+					[` has-text-align-${textAlignTitle}`]: textAlignTitle,
+			  })
+			: "";
 
 	const createClass = (name) => {
 		const blockNameBase = "wp-block-cjsb-accordion__";
@@ -36,7 +51,7 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 
 	const handleClick = () => {
 		const button = document.querySelector(
-			"#wp-block-cjsb-accordion__button--" + attributes.accordionId
+			"#wp-block-cjsb-accordion__button--" + accordionId
 		);
 		let buttonState = button.getAttribute("aria-expanded");
 		{
@@ -49,30 +64,49 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 		}
 	};
 
+	const template = [["core/paragraph", { placeholder: "Accordion Text" }]];
+
 	return (
 		<>
-			<div id={createClass("item--" + attributes.accordionId)} {...blockProps}>
+			<div id={createClass("item--" + accordionId)} {...blockProps}>
 				<button
-					id={createClass("button--" + attributes.accordionId)}
+					id={createClass("button--" + accordionId)}
 					aria-expanded="false"
-					class={createClass("button")}
+					class={createClass("button") + className}
 					onClick={handleClick}
 				>
-					<span class={createClass("title")}>{attributes.title}</span>
-					<span class={createClass("icon")} aria-hidden="true"></span>
+					<BlockControls group="block">
+						<AlignmentControl
+							value={textAlignTitle}
+							onChange={(val) => setAttributes({ textAlignTitle: val })}
+						/>
+					</BlockControls>
+					<RichText
+						{...blockProps}
+						class={createClass("title")}
+						tagName="span"
+						value={title}
+						allowedFormats={["core/bold", "core/italic"]}
+						onChange={(val) => setAttributes({ title: val })}
+						textAlign={textAlignTitle}
+						placeholder={placeholder || __("Accordion Heading")}
+					/>
+					<span class={createClass("icon")} aria-hidden="true">
+						<Icon />
+					</span>
 				</button>
 				<div class={createClass("content")}>
-					<InnerBlocks />
+					<InnerBlocks template={template} />
 				</div>
 			</div>
 			<InspectorControls>
 				<PanelBody title={__("Accordion Settings")}>
-					<TextControl
+					{/* <TextControl
 						{...blockProps}
-						label="Item Title"
-						value={attributes.title}
+						label="Title"
+						value={title}
 						onChange={(val) => setAttributes({ title: val })}
-					/>
+					/> */}
 				</PanelBody>
 			</InspectorControls>
 		</>
