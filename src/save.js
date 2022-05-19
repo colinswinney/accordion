@@ -9,9 +9,9 @@ import { InnerBlocks, useBlockProps, RichText } from "@wordpress/block-editor";
 /**
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#save
  *
- * @param {Object} props            Properties passed to the function.
- * @param {Object} props.attributes Available block attributes.
- * @return {WPElement} Element to render.
+ * @param {Object} props
+ * @param {Object} props.attributes
+ * @return {WPElement}
  */
 export default function save({ attributes }) {
 	const { title, textAlignTitle, accordionId } = attributes;
@@ -33,18 +33,18 @@ export default function save({ attributes }) {
 			<button
 				id={createClass("button--" + accordionId)}
 				aria-expanded="false"
-				class={createClass("button") + className}
+				className={createClass("button") + className}
 			>
 				<RichText.Content
 					tagName="span"
-					class={createClass("title")}
+					className={createClass("title")}
 					value={title}
 				/>
 				<span class={createClass("icon")} aria-hidden="true">
 					<Icon />
 				</span>
 			</button>
-			<div class={createClass("content")}>
+			<div className={createClass("content")}>
 				<InnerBlocks.Content />
 			</div>
 		</div>

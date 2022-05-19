@@ -4,7 +4,7 @@ import Icon from "./icon";
 /**
  * @see https://developer.wordpress.org/block-editor/packages/packages-components/
  */
-import { PanelBody, TextControl } from "@wordpress/components";
+import { PanelBody } from "@wordpress/components";
 
 /**
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
@@ -23,18 +23,16 @@ import { __ } from "@wordpress/i18n";
 /**
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
- * @param {Object}   props               Properties passed to the function.
- * @param {Object}   props.attributes    Available block attributes.
- * @param {Function} props.setAttributes Function that updates individual attributes.
+ * @param {Object}   props
+ * @param {Object}   props.attributes
+ * @param {Function} props.setAttributes
  *
- * @return {WPElement} Element to render.
+ * @return {WPElement}
  */
 export default function Edit({ clientId, attributes, setAttributes }) {
 	const { title, textAlignTitle, accordionId, placeholder } = attributes;
 
-	const blockProps = useBlockProps();
-
-	setAttributes({ accordionId: clientId });
+	setAttributes({ accordionId: clientId.substring(0, 8) });
 
 	const className =
 		textAlignTitle !== "none"
@@ -66,13 +64,15 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 
 	const template = [["core/paragraph", { placeholder: "Accordion Text" }]];
 
+	const blockProps = useBlockProps();
+
 	return (
 		<>
 			<div id={createClass("item--" + accordionId)} {...blockProps}>
 				<button
 					id={createClass("button--" + accordionId)}
 					aria-expanded="false"
-					class={createClass("button") + className}
+					className={createClass("button") + className}
 					onClick={handleClick}
 				>
 					<BlockControls group="block">
@@ -82,8 +82,7 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 						/>
 					</BlockControls>
 					<RichText
-						{...blockProps}
-						class={createClass("title")}
+						className={createClass("title")}
 						tagName="span"
 						value={title}
 						allowedFormats={["core/bold", "core/italic"]}
@@ -100,14 +99,7 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 				</div>
 			</div>
 			<InspectorControls>
-				<PanelBody title={__("Accordion Settings")}>
-					{/* <TextControl
-						{...blockProps}
-						label="Title"
-						value={title}
-						onChange={(val) => setAttributes({ title: val })}
-					/> */}
-				</PanelBody>
+				<PanelBody title={__("Accordion Settings")}></PanelBody>
 			</InspectorControls>
 		</>
 	);

@@ -34,6 +34,16 @@
 		"color": {
 			"text": true,
 			"background": true
+		},
+		"spacing": {
+			"margin": true,
+			"padding": true,
+			"blockGap": true,
+			"__experimentalDefaultControls": {
+				"margin": true,
+				"padding": true,
+				"blockGap": true
+			}
 		}
 	},
 	"textdomain": "cjsb-accordion",

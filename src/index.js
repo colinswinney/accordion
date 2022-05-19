@@ -1,7 +1,12 @@
 /**
+ * @see https://developer.wordpress.org/block-editor/how-to-guides/internationalization/
+ */
+import { __ } from "@wordpress/i18n";
+
+/**
  * @see https://developer.wordpress.org/block-editor/developers/block-api/#registering-a-block
  */
-import { registerBlockType } from "@wordpress/blocks";
+import { registerBlockType, registerBlockStyle } from "@wordpress/blocks";
 
 /**
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
@@ -35,4 +40,16 @@ registerBlockType("cjsb/accordion", {
 	 * @see ./save.js
 	 */
 	save,
+});
+
+registerBlockStyle("cjsb/accordion", {
+	name: "icon-on-left",
+	label: __("Icon on Left"),
+	isDefault: false,
+});
+
+registerBlockStyle("cjsb/accordion", {
+	name: "icon-on-right",
+	label: __("Icon on Right"),
+	isDefault: true,
 });

@@ -1,16 +1,17 @@
 .wp-block-cjsb-accordion {
 	--cjsb-acc-button-padding: 1em 0;
 	--cjsb-acc-button-bg: transparent;
-	--cjsb-acc-button-bg-active: #f9f9f9;
+	--cjsb-acc-button-bg-active: transparent;
 	--cjsb-acc-button-color: inherit;
-	--cjsb-acc-button-color-active: red;
-	--cjsb-acc-button-border-color: #eee;
+	--cjsb-acc-button-color-active: inherit;
+	--cjsb-acc-button-border-color: rgb(0 0 0 / 10%);
 	--cjsb-acc-button-border-color-active: transparent;
 	--cjsb-acc-title-font-family: inherit;
-	--cjsb-acc-title-font-size: 2em;
+	--cjsb-acc-title-font-size: 1.5em;
 	--cjsb-acc-title-font-weight: 400;
 	--cjsb-acc-icon-size: 1em;
-	--cjsb-acc-content-padding: 0;
+	--cjsb-acc-icon-padding: 0 1em;
+	--cjsb-acc-content-padding: 0 0 0 2.25em;
 	--cjsb-acc-transition: 0.2s ease;
 
 	&__button {
@@ -23,7 +24,7 @@
 		color: var(--cjsb-acc-button-color);
 		background: var(--cjsb-acc-button-bg);
 		border: none;
-		border-bottom: 0.063rem solid;
+		border-bottom: 1px solid;
 		border-color: var(--cjsb-acc-button-border-color);
 		transition: var(--cjsb-acc-transition);
 		outline: none;
@@ -50,7 +51,6 @@
 			color: var(--cjsb-acc-button-color-active);
 
 			+ .wp-block-cjsb-accordion__content {
-				padding: var(--cjsb-acc-content-padding);
 				opacity: 1;
 				max-height: 100rem;
 				transition: var(--cjsb-acc-transition);
@@ -72,6 +72,7 @@
 	}
 
 	&__icon {
+		padding: var(--cjsb-acc-icon-padding);
 		transition: var(--cjsb-acc-transition);
 
 		svg {
@@ -82,10 +83,21 @@
 	}
 
 	&__content {
-		opacity: 0;
+		padding: var(--cjsb-acc-content-padding);
 		max-height: 0;
+		opacity: 0;
 		overflow: hidden;
 		will-change: opacity, max-height;
 		transition: var(--cjsb-acc-transition);
+	}
+
+	&.is-style-icon-on-left {
+		.wp-block-cjsb-accordion__icon {
+			order: 1;
+		}
+
+		.wp-block-cjsb-accordion__title {
+			order: 2;
+		}
 	}
 }
