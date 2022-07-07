@@ -2,7 +2,7 @@ import classnames from "classnames";
 import Icon from "./icon";
 
 /**
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/
  */
 import { InnerBlocks, useBlockProps, RichText } from "@wordpress/block-editor";
 
@@ -14,7 +14,7 @@ import { InnerBlocks, useBlockProps, RichText } from "@wordpress/block-editor";
  * @return {WPElement}
  */
 export default function save({ attributes }) {
-	const { title, textAlignTitle, accordionId } = attributes;
+	const { title, textAlignTitle, ariaExpanded, accordionId } = attributes;
 
 	const className =
 		textAlignTitle !== "none"
@@ -32,7 +32,7 @@ export default function save({ attributes }) {
 		<div id={createClass("item--" + accordionId)} {...useBlockProps.save()}>
 			<button
 				id={createClass("button--" + accordionId)}
-				aria-expanded="false"
+				aria-expanded={ariaExpanded}
 				className={createClass("button") + className}
 			>
 				<RichText.Content

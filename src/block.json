@@ -20,7 +20,7 @@
 		},
 		"ariaExpanded": {
 			"type": "boolean",
-			"default": "false"
+			"default": "true"
 		},
 		"accordionId": {
 			"type": "string"
@@ -31,10 +31,6 @@
 	},
 	"supports": {
 		"anchor": true,
-		"color": {
-			"text": true,
-			"background": true
-		},
 		"spacing": {
 			"margin": true,
 			"padding": true,

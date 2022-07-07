@@ -4,10 +4,14 @@ import Icon from "./icon";
 /**
  * @see https://developer.wordpress.org/block-editor/packages/packages-components/
  */
-import { PanelBody } from "@wordpress/components";
+import { 
+	PanelBody,
+	PanelRow,
+	CheckboxControl
+} from "@wordpress/components";
 
 /**
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/
  */
 import {
 	AlignmentControl,
@@ -18,6 +22,9 @@ import {
 	useBlockProps,
 } from "@wordpress/block-editor";
 
+/**
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
+ */
 import { __ } from "@wordpress/i18n";
 
 /**
@@ -30,7 +37,9 @@ import { __ } from "@wordpress/i18n";
  * @return {WPElement}
  */
 export default function Edit({ clientId, attributes, setAttributes }) {
-	const { title, textAlignTitle, accordionId, placeholder } = attributes;
+	const { title, textAlignTitle, ariaExpanded, accordionId, placeholder } = attributes;
+	const template = [["core/paragraph", { placeholder: "Accordion Text" }]];
+	const blockProps = useBlockProps();
 
 	setAttributes({ accordionId: clientId.substring(0, 8) });
 
@@ -43,37 +52,21 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 
 	const createClass = (name) => {
 		const blockNameBase = "wp-block-cjsb-accordion__";
-
 		return blockNameBase + name;
 	};
 
-	const handleClick = () => {
-		const button = document.querySelector(
-			"#wp-block-cjsb-accordion__button--" + accordionId
-		);
-		let buttonState = button.getAttribute("aria-expanded");
-		{
-			console.log(button);
-		}
-		if (buttonState == "false") {
-			button.setAttribute("aria-expanded", "true");
-		} else {
-			button.setAttribute("aria-expanded", "false");
-		}
+	const handleAriaExpanded = () => {
+		ariaExpanded ? setAttributes({ ariaExpanded: false }) : setAttributes({ ariaExpanded: true });
 	};
-
-	const template = [["core/paragraph", { placeholder: "Accordion Text" }]];
-
-	const blockProps = useBlockProps();
 
 	return (
 		<>
 			<div id={createClass("item--" + accordionId)} {...blockProps}>
 				<button
 					id={createClass("button--" + accordionId)}
-					aria-expanded="false"
+					aria-expanded={ariaExpanded}
 					className={createClass("button") + className}
-					onClick={handleClick}
+					onClick={handleAriaExpanded}
 				>
 					<BlockControls group="block">
 						<AlignmentControl
@@ -99,7 +92,15 @@ export default function Edit({ clientId, attributes, setAttributes }) {
 				</div>
 			</div>
 			<InspectorControls>
-				<PanelBody title={__("Accordion Settings")}></PanelBody>
+				<PanelBody title={__("Accordion Settings")}>
+					<PanelRow>
+						<CheckboxControl
+							label={__("Open by default?")}
+							checked={ ariaExpanded }
+							onChange={handleAriaExpanded}
+						/>
+					</PanelRow>
+				</PanelBody>
 			</InspectorControls>
 		</>
 	);

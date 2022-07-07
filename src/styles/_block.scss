@@ -6,12 +6,13 @@
 	--cjsb-acc-button-color-active: inherit;
 	--cjsb-acc-button-border-color: rgb(0 0 0 / 10%);
 	--cjsb-acc-button-border-color-active: transparent;
+	--cjsb-acc-button-outline-focus: red;
 	--cjsb-acc-title-font-family: inherit;
 	--cjsb-acc-title-font-size: 1.5em;
 	--cjsb-acc-title-font-weight: 400;
 	--cjsb-acc-icon-size: 1em;
 	--cjsb-acc-icon-padding: 0 1em;
-	--cjsb-acc-content-padding: 0 0 0 2.25em;
+	--cjsb-acc-content-padding: 0 0 0 0;
 	--cjsb-acc-transition: 0.2s ease;
 
 	&__button {
@@ -27,7 +28,6 @@
 		border-bottom: 1px solid;
 		border-color: var(--cjsb-acc-button-border-color);
 		transition: var(--cjsb-acc-transition);
-		outline: none;
 
 		&:not(.has-text-align-center),
 		&:not(.has-text-align-right) {
@@ -42,7 +42,7 @@
 		}
 
 		&:focus-visible {
-			outline-color: var(--cjsb-acc-button-color-active);
+			outline-color: var(--cjsb-acc-button-outline-focus);
 			outline-offset: 0.25em;
 		}
 
